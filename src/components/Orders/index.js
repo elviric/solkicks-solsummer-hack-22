@@ -1,21 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { useConnection } from '@solana/wallet-adapter-react';
+import { useConnection } from "@solana/wallet-adapter-react";
 import { Link } from "react-router-dom";
 import { MdKeyboardArrowLeft } from "react-icons/md";
-import {
-  PublicKey,
-  Keypair,
-} from "@solana/web3.js";
+import { PublicKey, Keypair } from "@solana/web3.js";
 import Navbar from "../Navbar";
 import Footer from "../Footer";
 import { useSelector } from "react-redux";
 import BigNumber from "bignumber.js";
+import Lottie from "react-lottie";
+import animationData from "../../lotties/success-animation.json";
 
-import {
-  encodeURL,
-  findReference,
-  FindReferenceError,
-} from "@solana/pay";
+import { encodeURL, findReference, FindReferenceError } from "@solana/pay";
 import { QRCode } from "../QRCode";
 
 const PaymentStatus = {
@@ -28,7 +23,14 @@ const PaymentStatus = {
 };
 
 const Orders = () => {
-  
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
 
   const state = useSelector((state) => state.addItem);
   const { connection } = useConnection();
@@ -101,7 +103,6 @@ const Orders = () => {
     };
   }, [status, reference, signature, connection]);
 
-
   return (
     <>
       <Navbar />
@@ -117,6 +118,12 @@ const Orders = () => {
           </Link>
 
           {url && status === PaymentStatus.Pending && <QRCode url={url} />}
+
+          {status === PaymentStatus.Confirmed && (
+            <div>
+              <Lottie options={defaultOptions} height={400} width={400} />
+            </div>
+          )}
 
           {status && <h2>Transfer status : {status}</h2>}
         </div>

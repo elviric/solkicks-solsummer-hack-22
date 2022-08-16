@@ -685,6 +685,7 @@ input::-webkit-inner-spin-button {
 /* Checkout Page CSS */
 .checkoutWrapper {
   padding: 0px 40px;
+  align-items: center;
 }
 
 .checkoutWrapper h1 {
